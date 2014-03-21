@@ -1,0 +1,31 @@
+language: java
+
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
+  - openjdk6
+
+env:
+  - TERM=dumb COVERAGE=no
+  - TERM=dumb COVERAGE=yes
+
+matrix:
+  exclude:
+    - jdk: oraclejdk8
+      env: TERM=dumb COVERAGE=yes
+    - jdk: oraclejdk7
+      env: TERM=dumb COVERAGE=no
+    - jdk: openjdk7
+      env: TERM=dumb COVERAGE=yes
+    - jdk: openjdk6
+      env: TERM=dumb COVERAGE=yes
+
+before_install:
+  - wget http://services.gradle.org/distributions/gradle-1.11-bin.zip
+  - unzip gradle-1.11-bin.zip
+  - export GRADLE_HOME=$PWD/gradle-1.11
+  - export PATH=$GRADLE_HOME/bin:$PATH
+
+after_success:
+  - if [ x"$COVERAGE" == "xyes" ] ; then gradle cobertura && gradle coveralls ; fi
