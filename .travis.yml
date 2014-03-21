@@ -4,7 +4,6 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
-  - openjdk6
 
 env:
   - TERM=dumb COVERAGE=no
@@ -17,8 +16,6 @@ matrix:
     - jdk: oraclejdk7
       env: TERM=dumb COVERAGE=no
     - jdk: openjdk7
-      env: TERM=dumb COVERAGE=yes
-    - jdk: openjdk6
       env: TERM=dumb COVERAGE=yes
 
 before_install:
