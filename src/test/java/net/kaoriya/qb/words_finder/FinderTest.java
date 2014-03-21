@@ -66,4 +66,18 @@ public class FinderTest {
                     new Match("a", 2),
                 });
     }
+
+    /* Disalbe for debug.
+    @Test
+    public void findMultiUsedChars() {
+        findCheck(
+                new String[] { "foo", "bar", "baz" },
+                "barbazbafoo",
+                new Match[] {
+                    new Match("bar", 0),
+                    new Match("baz", 3),
+                    new Match("foo", 8),
+                });
+    }
+    */
 }

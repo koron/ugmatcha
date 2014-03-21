@@ -53,7 +53,6 @@ public class Finder {
     }
 
     private void wordsFinish() {
-        // nothing to do for now.
         this.id2word = new Word[this.wordsIndex];
         int index = 0;
         for (Word w : this.wordsTable) {
@@ -95,7 +94,7 @@ public class Finder {
     }
 
     public List<Match> findMatches(String text, int max) {
-        final ArrayList<Match> found = new ArrayList<>();
+        final ArrayList<Match> found = new ArrayList<Match>();
         scan(text, new Handler() {
             public boolean found(Finder f, int id, int index) {
                 Word w = getWord(id);

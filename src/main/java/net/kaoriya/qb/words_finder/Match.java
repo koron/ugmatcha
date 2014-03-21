@@ -13,14 +13,23 @@ public class Match {
 
     @Override
     public boolean equals(Object o) {
-        Match p = (Match)o;
-        if (p == null) {
-            return false;
-        } else if (p == this) {
+        // Check meta equality.
+        if (o == this) {
             return true;
-        } else {
-            return this.text.equals(p.text) && this.index == p.index;
+        } else if (o == null) {
+            return false;
+        } else if (o.getClass() != getClass()) {
+            return false;
         }
+        // Check properties equality.
+        Match p = (Match)o;
+        if (this.text == null ? p.text != null : !this.text.equals(p.text))
+        {
+            return false;
+        } else if (this.index != p.index) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -6,6 +6,11 @@ import static org.junit.Assert.*;
 public class RankUtilsTest {
 
     @Test
+    public void ctor() {
+        assertNotNull(new RankUtils());
+    }
+
+    @Test
     public void rank0() {
         assertEquals(0, RankUtils.rank(null));
         assertEquals(0, RankUtils.rank(""));
