@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 class Context {
 
+    static final boolean DEBUG = true;
+
     final Finder finder;
 
     int foundCount;
@@ -38,22 +40,19 @@ class Context {
     }
 
     boolean put(List<Event> events, Handler handler, int max, int index) {
-        /*
-        if (this.verbose) {
+        if (DEBUG && this.verbose) {
             System.out.format("Context#put events=%s index=%d",
                     events, index);
             System.out.println("");
         }
-        */
         boolean found = false;
         final int end = this.state.length;
         int eventIter = 0;
+        int prevW = -1;
         for (int w = 0; w < end;) {
-            /*
-            if (this.verbose) {
+            if (DEBUG && this.verbose) {
                 System.out.format("   w=%d\n", w);
             }
-            */
             // Clear remained state when no more events.
             if (eventIter >= events.size()) {
                 Arrays.fill(this.state, w, end, 0);
@@ -84,12 +83,10 @@ class Context {
             // Apply events for the word.
             boolean padding = false;
             for (int w2 = w; w2 < nextW;) {
-                /*
-                if (this.verbose) {
+                if (DEBUG && this.verbose) {
                     System.out.format("    w2=%d eventIter=%d\n",
                             w2, eventIter);
                 }
-                */
                 if (eventIter >= events.size()) {
                     break;
                 }
@@ -132,14 +129,12 @@ class Context {
             w = nextW;
         }
 
-        /*
-        if (this.verbose) {
+        if (DEBUG && this.verbose) {
             System.out.format("  state=%s", ArrayUtils.toString(this.state));
             System.out.println("");
             System.out.format("  found=%s", found);
             System.out.println("");
         }
-        */
 
         return found;
     }

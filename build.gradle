@@ -4,7 +4,7 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 version = '0.1'
-mainClassName = 'net.kaoriya.qb.words_finder.Main'
+mainClassName = 'net.kaoriya.qb.words_finder.DebugMain'
 
 repositories {
     mavenCentral()

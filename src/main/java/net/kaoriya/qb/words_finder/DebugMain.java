@@ -1,6 +1,6 @@
 package net.kaoriya.qb.words_finder;
 
-public class Main {
+public class DebugMain {
 
     private static void findCheck(
             String[] words,
@@ -45,10 +45,12 @@ public class Main {
 
     public static void main(String[] args) {
         findCheck(
-                new String[] { "foo", },
-                "foo",
+                new String[] { "foo", "bar", "baz" },
+                "barbazbafoo",
                 new Match[] {
-                    new Match("foo", 0),
+                    new Match("bar", 0),
+                    new Match("baz", 3),
+                    new Match("foo", 8),
                 },
                 true);
     }
