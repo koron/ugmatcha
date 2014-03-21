@@ -67,7 +67,6 @@ public class FinderTest {
                 });
     }
 
-    /* Disalbe for debug.
     @Test
     public void findMultiUsedChars() {
         findCheck(
@@ -79,5 +78,5 @@ public class FinderTest {
                     new Match("foo", 8),
                 });
     }
-    */
+
 }

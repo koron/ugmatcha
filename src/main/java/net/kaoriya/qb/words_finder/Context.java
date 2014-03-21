@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 class Context {
 
-    static final boolean DEBUG = true;
+    static final boolean DEBUG = false;
 
     final Finder finder;
 
@@ -51,15 +51,23 @@ class Context {
         int prevW = -1;
         for (int w = 0; w < end;) {
             if (DEBUG && this.verbose) {
-                System.out.format("   w=%d\n", w);
+                System.out.format("   w=%d eventIter=%d\n", w, eventIter);
             }
+
             // Clear remained state when no more events.
             if (eventIter >= events.size()) {
                 Arrays.fill(this.state, w, end, 0);
                 break;
             }
 
+            // Guard from infinite loop.
+            if (prevW == w) {
+                throw new RuntimeException("Terminated by possibility of infinite loop.  It maybe bug.  Please contact author");
+            }
+            prevW = w;
+
             // Clear state till next event.
+            int eventIterOrig = eventIter;
             Event first = events.get(eventIter);
             if (w < first.id) {
                 Arrays.fill(this.state, w, first.id, 0);
@@ -114,6 +122,10 @@ class Context {
                 } else {
                     ++eventIter;
                 }
+            }
+
+            if (eventIterOrig == eventIter) {
+                ++eventIter;
             }
 
             // Padding state.
