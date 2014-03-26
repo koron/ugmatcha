@@ -1,6 +1,7 @@
 package net.kaoriya.qb.words_finder;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -148,6 +149,43 @@ class Context {
             System.out.println("");
         }
 
+        return found;
+    }
+
+    boolean scan(String text, Handler handler) {
+        return scan(text, handler, 0);
+    }
+
+    boolean scan(String text, Handler handler, int max) {
+        boolean found = false;
+        for (int i = 0, len = text.length(); i < len; ++i) {
+            char ch = text.charAt(i);
+            ArrayList<Event> events = this.finder.eventsMap.get(ch);
+            if (events == null) {
+                clear();
+            } else {
+                found |= put(events, handler, max, i);
+                if (this.terminated) {
+                    break;
+                }
+            }
+        }
+        return found;
+    }
+
+    List<Match> findMatches(String text) {
+        return findMatches(text, 0);
+    }
+
+    List<Match> findMatches(String text, int max) {
+        final ArrayList<Match> found = new ArrayList<Match>();
+        scan(text, new Handler() {
+            public boolean found(Finder f, int id, int index) {
+                Word w = f.getWord(id);
+                found.add(new Match(w.text, index - w.text.length() + 1));
+                return true;
+            }
+        }, max);
         return found;
     }
 }

@@ -62,7 +62,7 @@ public class Finder {
         }
     }
 
-    private Word getWord(int id) {
+    Word getWord(int id) {
         return this.id2word[id];
     }
 
@@ -71,22 +71,8 @@ public class Finder {
     }
 
     public boolean scan(String text, Handler handler, int max) {
-        boolean found = false;
         Context c = new Context(this, this.wordsIndex);
-        c.verbose = this.verbose;
-        for (int i = 0, len = text.length(); i < len; ++i) {
-            char ch = text.charAt(i);
-            ArrayList<Event> events = this.eventsMap.get(ch);
-            if (events == null) {
-                c.clear();
-            } else {
-                found |= c.put(events, handler, max, i);
-                if (c.terminated) {
-                    break;
-                }
-            }
-        }
-        return found;
+        return c.scan(text, handler, max);
     }
 
     public List<Match> findMatches(String text) {
@@ -94,14 +80,11 @@ public class Finder {
     }
 
     public List<Match> findMatches(String text, int max) {
-        final ArrayList<Match> found = new ArrayList<Match>();
-        scan(text, new Handler() {
-            public boolean found(Finder f, int id, int index) {
-                Word w = getWord(id);
-                found.add(new Match(w.text, index - w.text.length() + 1));
-                return true;
-            }
-        }, max);
-        return found;
+        Context c = new Context(this, this.wordsIndex);
+        return c.findMatches(text, max);
+    }
+
+    public Context newContext() {
+        return new Context(this, this.wordsIndex);
     }
 }
