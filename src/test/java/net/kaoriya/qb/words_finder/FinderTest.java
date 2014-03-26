@@ -79,4 +79,14 @@ public class FinderTest {
                 });
     }
 
+    @Test
+    public void findCyclicText() {
+        findCheck(
+                new String[] { "aba" },
+                "ababa",
+                new Match[] {
+                    new Match("aba", 0),
+                    new Match("aba", 2),
+                });
+    }
 }
