@@ -48,7 +48,8 @@ public class Finder {
                 list = new ArrayList<>();
                 eventsMap.put(ch, list);
             }
-            list.add(new Event(w.index, w.index + w.rank, i, i == last));
+            boolean is_last = i == last;
+            list.add(new Event(w.index, w.index + w.rank, i, is_last));
         }
     }
 
