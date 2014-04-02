@@ -6,4 +6,5 @@ public interface Engine {
 
     String findOne(String text);
 
+    String getName();
 }

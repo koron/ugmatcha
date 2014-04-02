@@ -11,4 +11,7 @@ public class RegexpEngine implements Engine {
         return null;
     }
 
+    public String getName() {
+        return "Regexp";
+    }
 }

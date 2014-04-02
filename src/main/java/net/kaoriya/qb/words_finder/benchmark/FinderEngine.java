@@ -23,6 +23,7 @@ public class FinderEngine implements Engine, Handler {
     }
 
     public String findOne(String text) {
+        this.scanResult = null;
         Context c = getContext();
         c.scan(text, this, 1);
         return this.scanResult;
@@ -47,4 +48,7 @@ public class FinderEngine implements Engine, Handler {
         return true;
     }
 
+    public String getName() {
+        return "Finder";
+    }
 }
