@@ -33,6 +33,7 @@ public class BenchmarkMain {
             }
         }
         long elapsed = System.nanoTime() - start;
+
         double seconds = elapsed / 1e9;
         System.out.format(
                 "%1$1s: %2$.3f queries/sec (%3$d queries in %4$.3f secs)",
