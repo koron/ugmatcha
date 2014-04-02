@@ -63,7 +63,7 @@ public class Finder {
         }
     }
 
-    Word getWord(int id) {
+    public Word getWord(int id) {
         return this.id2word[id];
     }
 

@@ -1,12 +1,12 @@
 package net.kaoriya.qb.words_finder;
 
-class Word {
+public class Word {
 
-    final String text;
+    public final String text;
 
-    final int index;
+    public final int index;
 
-    final int rank;
+    public final int rank;
 
     Word(String text, int index) {
         this.text = text;

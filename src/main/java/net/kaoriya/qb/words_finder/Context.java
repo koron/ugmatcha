@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
-class Context {
+public class Context {
 
     static final boolean DEBUG = false;
 
@@ -152,11 +152,11 @@ class Context {
         return found;
     }
 
-    boolean scan(String text, Handler handler) {
+    public boolean scan(String text, Handler handler) {
         return scan(text, handler, 0);
     }
 
-    boolean scan(String text, Handler handler, int max) {
+    public boolean scan(String text, Handler handler, int max) {
         boolean found = false;
         for (int i = 0, len = text.length(); i < len; ++i) {
             char ch = text.charAt(i);
