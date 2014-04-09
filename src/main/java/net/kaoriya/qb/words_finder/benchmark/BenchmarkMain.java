@@ -2,6 +2,7 @@ package net.kaoriya.qb.words_finder.benchmark;
 
 import java.util.List;
 import java.io.File;
+
 public class BenchmarkMain {
 
     public static final String WORDS_PATH = "data/words.txt";
