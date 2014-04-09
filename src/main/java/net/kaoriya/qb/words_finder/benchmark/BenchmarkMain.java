@@ -9,8 +9,8 @@ public class BenchmarkMain {
 
     public static final String TARGETS_PATH = "data/targets2.txt";
 
-    public static final long FINDCOUNT_FINDER = 3000000;
-    public static final long FINDCOUNT_REGEXP = 100000;
+    public static final long FINDCOUNT_FINDER = 9000000;
+    public static final long FINDCOUNT_REGEXP = 200000;
 
     public static void benchmark(
             Engine engine,
