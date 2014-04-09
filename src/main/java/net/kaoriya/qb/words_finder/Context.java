@@ -50,9 +50,10 @@ public class Context {
         final int end = this.state.length;
         int eventIter = 0;
         int prevW = -1;
+        int prevEventIter = -1;
         for (int w = 0; w < end;) {
             if (DEBUG && this.verbose) {
-                System.out.format("   w=%d eventIter=%d\n", w, eventIter);
+                System.out.format("  w=%d eventIter=%d\n", w, eventIter);
             }
 
             // Clear remained state when no more events.
@@ -62,10 +63,14 @@ public class Context {
             }
 
             // Guard from infinite loop.
-            if (prevW == w) {
+            if (w == prevW && eventIter == prevEventIter) {
+                if (DEBUG && this.verbose) {
+                    System.out.format("  terminated\n");
+                }
                 throw new RuntimeException("Terminated by possibility of infinite loop.  It maybe bug.  Please contact author");
             }
             prevW = w;
+            prevEventIter = eventIter;
 
             // Clear state till next event.
             int eventIterOrig = eventIter;
@@ -91,6 +96,9 @@ public class Context {
 
             // Apply events for the word.
             boolean padding = false;
+            if (DEBUG && this.verbose) {
+                System.out.format("    nextW=%d eventIter=%d\n", nextW, eventIter);
+            }
             for (int w2 = w; w2 < nextW;) {
                 if (DEBUG && this.verbose) {
                     System.out.format("    w2=%d eventIter=%d\n",
@@ -125,7 +133,7 @@ public class Context {
                 }
             }
 
-            if (eventIterOrig == eventIter) {
+            if (eventIter == eventIterOrig) {
                 ++eventIter;
             }
 

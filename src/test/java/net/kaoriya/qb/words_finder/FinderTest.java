@@ -93,10 +93,28 @@ public class FinderTest {
     @Test
     public void duplicatedWords() {
         findCheck(
-                new String[] { "tt", "tt" },
-                "t",
+                new String[] { "a", "a" },
+                "a",
                 new Match[] {
-                },
-                true);
+                    new Match("a", 0),
+                    new Match("a", 0),
+                });
+        findCheck(
+                new String[] { "bb", "b" },
+                "b",
+                new Match[] {
+                    new Match("b", 0),
+                });
+        findCheck(
+                new String[] { "ccc", "c" },
+                "c",
+                new Match[] {
+                    new Match("c", 0),
+                });
+        findCheck(
+                new String[] { "ddd", "dd" },
+                "d",
+                new Match[] {
+                });
     }
 }
