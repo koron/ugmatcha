@@ -13,6 +13,15 @@ public class BenchmarkMain {
     public static void benchmark(Engine engine) throws Exception {
         List<String> words = Utils.readLines(new File(WORDS_PATH));
         List<String> targets = Utils.readLines(new File(TARGETS_PATH));
+        benchmark(engine, words, targets);
+    }
+
+    public static void benchmark(
+            Engine engine,
+            List<String> words,
+            List<String> targets)
+        throws Exception
+    {
         for (String word : words) {
             engine.add(word);
         }
