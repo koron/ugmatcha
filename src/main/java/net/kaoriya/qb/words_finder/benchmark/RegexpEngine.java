@@ -15,6 +15,10 @@ public class RegexpEngine implements Engine {
         this.pattern = null;
     }
 
+    public void prepare() {
+        getPattern();
+    }
+
     public String findOne(String text) {
         Pattern p = getPattern();
         Matcher m = p.matcher(text);

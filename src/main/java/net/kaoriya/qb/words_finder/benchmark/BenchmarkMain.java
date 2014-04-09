@@ -16,6 +16,7 @@ public class BenchmarkMain {
         for (String word : words) {
             engine.add(word);
         }
+        engine.prepare();
         System.gc();
         System.gc();
 

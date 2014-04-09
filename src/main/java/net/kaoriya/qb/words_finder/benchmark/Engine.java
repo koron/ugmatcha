@@ -4,6 +4,8 @@ public interface Engine {
 
     void add(String word);
 
+    void prepare();
+
     String findOne(String text);
 
     String getName();

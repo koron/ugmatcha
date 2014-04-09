@@ -22,6 +22,10 @@ public class FinderEngine implements Engine, Handler {
         this.context = null;
     }
 
+    public void prepare() {
+        getContext();
+    }
+
     public String findOne(String text) {
         this.scanResult = null;
         Context c = getContext();
