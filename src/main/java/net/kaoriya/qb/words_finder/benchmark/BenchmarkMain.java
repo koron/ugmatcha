@@ -5,22 +5,28 @@ import java.io.File;
 
 public class BenchmarkMain {
 
-    public static final String WORDS_PATH = "data/words.txt";
+    public static final String WORDS_PATH = "data/words2.txt";
 
-    public static final String TARGETS_PATH = "data/targets.txt";
+    public static final String TARGETS_PATH = "data/targets2.txt";
 
-    public static final long FIND_COUNT = 100000000;
+    public static final long FINDCOUNT_FINDER = 100000;
+    public static final long FINDCOUNT_REGEXP = 100000;
 
-    public static void benchmark(Engine engine) throws Exception {
+    public static void benchmark(
+            Engine engine,
+            long findCount)
+        throws Exception
+    {
         List<String> words = Utils.readLines(new File(WORDS_PATH));
         List<String> targets = Utils.readLines(new File(TARGETS_PATH));
-        benchmark(engine, words, targets);
+        benchmark(engine, words, targets, findCount);
     }
 
     public static void benchmark(
             Engine engine,
             List<String> words,
-            List<String> targets)
+            List<String> targets,
+            long findCount)
         throws Exception
     {
         for (String word : words) {
@@ -37,7 +43,7 @@ public class BenchmarkMain {
             for (String target : targets) {
                 engine.findOne(target);
                 ++count;
-                if (count >= FIND_COUNT) {
+                if (count >= findCount) {
                     loop = false;
                     break;
                 }
@@ -53,7 +59,7 @@ public class BenchmarkMain {
     }
 
     public static void main(String[] args) throws Exception {
-        benchmark(new FinderEngine());
-        benchmark(new RegexpEngine());
+        benchmark(new FinderEngine(), FINDCOUNT_FINDER);
+        benchmark(new RegexpEngine(), FINDCOUNT_REGEXP);
     }
 }
