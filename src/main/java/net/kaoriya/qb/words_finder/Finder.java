@@ -72,7 +72,7 @@ public class Finder {
     }
 
     public boolean scan(String text, Handler handler, int max) {
-        Context c = new Context(this, this.wordsIndex);
+        Context c = newContext();
         return c.scan(text, handler, max);
     }
 
@@ -81,11 +81,13 @@ public class Finder {
     }
 
     public List<Match> findMatches(String text, int max) {
-        Context c = new Context(this, this.wordsIndex);
+        Context c = newContext();
         return c.findMatches(text, max);
     }
 
     public Context newContext() {
-        return new Context(this, this.wordsIndex);
+        Context c = new Context(this, this.wordsIndex);
+        c.verbose = this.verbose;
+        return c;
     }
 }
