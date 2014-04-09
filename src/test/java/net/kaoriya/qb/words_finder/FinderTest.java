@@ -89,4 +89,14 @@ public class FinderTest {
                     new Match("aba", 2),
                 });
     }
+
+    @Test
+    public void duplicatedWords() {
+        findCheck(
+                new String[] { "tt", "tt" },
+                "t",
+                new Match[] {
+                },
+                true);
+    }
 }
