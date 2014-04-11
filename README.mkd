@@ -3,14 +3,16 @@
 ```
 $ gradle run
 :words_finder is getting tests from [task ':test']
-:compileJava
+:compileJava UP-TO-DATE
 :processResources UP-TO-DATE
-:classes
+:classes UP-TO-DATE
 :run
-Finder:   22715162.660 queries/sec (100000000 queries in  4.402 secs)
-Regexp:    5302812.902 queries/sec (100000000 queries in 18.858 secs)
+Finder:    1072163.843 queries/sec (9000000 queries in  8.394 secs)
+Regexp:      17809.043 queries/sec (200000 queries in 11.230 secs)
 
 BUILD SUCCESSFUL
 
-Total time: 27.007 secs
+Total time: 22.867 secs
 ```
+
+試行回数が異なるのは、それぞれのテストが10秒程度で終わるように調整したため。
