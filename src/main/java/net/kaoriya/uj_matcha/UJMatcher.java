@@ -11,7 +11,7 @@ public class UJMatcher {
         MatchHandler handler;
         int max;
 
-        int len;
+        int last;
         int index;
         int foundCount;
         boolean terminated;
@@ -21,8 +21,8 @@ public class UJMatcher {
             this.handler = handler;
             this.max = max;
 
-            this.len = this.text.length();
-            this.index = 0;
+            this.last = this.text.length() - 1;
+            this.index = -1;
             this.foundCount = 0;
             this.terminated = false;
         }
@@ -33,16 +33,16 @@ public class UJMatcher {
         }
 
         boolean hasNext() {
-            return this.index < this.len;
+            return this.index < this.last;
         }
 
         char next() {
-            return this.text.charAt(this.index++);
+            return this.text.charAt(++this.index);
         }
 
         public boolean fired(StateMachine src, Event event) {
             ++this.foundCount;
-            if (this.handler.matched(UJMatcher.this, event.id,
+            if (!this.handler.matched(UJMatcher.this, event.id,
                         this.text, this.index)
                     || (this.max > 0 && this.foundCount >= this.max))
             {
