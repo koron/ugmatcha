@@ -76,6 +76,9 @@ public class UJMatcher {
      * Match with text.
      *
      * When matched callback with handler.
+     *
+     * @param handler Callback interface when found match.
+     * @param max Max count of match, 0 for ALL.
      */
     public boolean match(String text, MatchHandler handler, int max) {
         // Set up a match.
@@ -103,6 +106,13 @@ public class UJMatcher {
         this.work.teardown();
 
         return this.work.foundCount > 0;
+    }
+
+    /**
+     * Match with text, for all matches.
+     */
+    public boolean match(String text, MatchHandler handler) {
+        return match(text, handler, 0);
     }
 
     ////////////////////////////////////////////////////////////////////////
