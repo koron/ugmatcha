@@ -1,5 +1,6 @@
 package net.kaoriya.uj_matcha;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -113,6 +114,30 @@ public class UJMatcher {
      */
     public boolean match(String text, MatchHandler handler) {
         return match(text, handler, 0);
+    }
+
+    /**
+     * Find matches as list of Match.
+     */
+    public List<Match> find(String text, int max) {
+        final ArrayList<Match> found = new ArrayList<>();
+        match(text, new MatchHandler() {
+            public boolean matched(UJMatcher matcher, int wordId, String text,
+                int index)
+            {
+                String w = matcher.getWord(wordId);
+                found.add(new Match(w, index - w.length() + 1));
+                return true;
+            }
+        }, max);
+        return found;
+    }
+
+    /**
+     * Find matches as list of Match.
+     */
+    public List<Match> find(String text) {
+        return find(text, 0);
     }
 
     ////////////////////////////////////////////////////////////////////////
