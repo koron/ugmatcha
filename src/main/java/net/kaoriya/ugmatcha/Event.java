@@ -1,4 +1,4 @@
-package net.kaoriya.uj_matcha;
+package net.kaoriya.ugmatcha;
 
 class Event {
 

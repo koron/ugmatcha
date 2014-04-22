@@ -1,4 +1,4 @@
-package net.kaoriya.uj_matcha;
+package net.kaoriya.ugmatcha;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

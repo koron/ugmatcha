@@ -1,4 +1,4 @@
-package net.kaoriya.uj_matcha;
+package net.kaoriya.ugmatcha;
 
 import java.util.Arrays;
 import java.util.ArrayList;

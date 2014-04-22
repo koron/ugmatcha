@@ -1,6 +1,6 @@
-# UJ Matcha
+# UG Matcha
 
-**UJ Matcha** matches against many words simultaneously.
+**UG Matcha** matches against many words simultaneously.
 
 ## Benchmark results.
 

@@ -1,4 +1,4 @@
-package net.kaoriya.uj_matcha;
+package net.kaoriya.ugmatcha;
 
 public interface MatchHandler {
 
@@ -10,6 +10,6 @@ public interface MatchHandler {
      * @param text match target text.
      * @param index tail position of matched.
      */
-    boolean matched(UJMatcher matcher, int wordId, String text, int index);
+    boolean matched(UGMatcher matcher, int wordId, String text, int index);
 
 }

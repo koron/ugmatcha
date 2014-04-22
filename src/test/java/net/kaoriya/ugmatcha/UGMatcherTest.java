@@ -1,9 +1,9 @@
-package net.kaoriya.uj_matcha;
+package net.kaoriya.ugmatcha;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class UJMatcherTest {
+public class UGMatcherTest {
 
     private static void findCheck(
             String[] words,
@@ -19,7 +19,7 @@ public class UJMatcherTest {
             Match[] expected,
             boolean verbose)
     {
-        UJMatcher m = UJMatcher.newMatcher(words);
+        UGMatcher m = UGMatcher.newMatcher(words);
         m.verbose = verbose;
         Match[] result = m.find(text).toArray(new Match[0]);
         assertArrayEquals("error detected scanning: \"" + text + "\"",

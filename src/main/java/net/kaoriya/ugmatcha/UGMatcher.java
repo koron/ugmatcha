@@ -1,10 +1,10 @@
-package net.kaoriya.uj_matcha;
+package net.kaoriya.ugmatcha;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UJMatcher {
+public class UGMatcher {
 
     class WorkingArea implements FireHandler {
         String text;
@@ -42,7 +42,7 @@ public class UJMatcher {
 
         public boolean fired(StateMachine src, Event event) {
             ++this.foundCount;
-            if (!this.handler.matched(UJMatcher.this, event.id,
+            if (!this.handler.matched(UGMatcher.this, event.id,
                         this.text, this.index)
                     || (this.max > 0 && this.foundCount >= this.max))
             {
@@ -60,7 +60,7 @@ public class UJMatcher {
 
     final WorkingArea work = new WorkingArea();
 
-    UJMatcher(WordsTable wordsTable) {
+    UGMatcher(WordsTable wordsTable) {
         this.wordsTable = wordsTable;
         this.stateMachine = new StateMachine(wordsTable.index);
     }
@@ -122,7 +122,7 @@ public class UJMatcher {
     public List<Match> find(String text, int max) {
         final ArrayList<Match> found = new ArrayList<>();
         match(text, new MatchHandler() {
-            public boolean matched(UJMatcher matcher, int wordId, String text,
+            public boolean matched(UGMatcher matcher, int wordId, String text,
                 int index)
             {
                 String w = matcher.getWord(wordId);
@@ -144,26 +144,26 @@ public class UJMatcher {
     // Static Methods
 
     /**
-     * Create a new UJMatcher.
+     * Create a new UGMatcher.
      */
-    public static UJMatcher newMatcher(List<String> words) {
+    public static UGMatcher newMatcher(List<String> words) {
         WordsTable wordsTable = new WordsTable();
         wordsTable.addAll(words);
         wordsTable.finish();
-        return new UJMatcher(wordsTable);
+        return new UGMatcher(wordsTable);
     }
 
     /**
-     * Create a new UJMatcher.
+     * Create a new UGMatcher.
      */
-    public static UJMatcher newMatcher(String ...words) {
+    public static UGMatcher newMatcher(String ...words) {
         return newMatcher(Arrays.asList(words));
     }
 
     /**
-     * Create a new clone UJMatcher.
+     * Create a new clone UGMatcher.
      */
-    public static UJMatcher newMatcher(UJMatcher matcher) {
-        return new UJMatcher(matcher.wordsTable);
+    public static UGMatcher newMatcher(UGMatcher matcher) {
+        return new UGMatcher(matcher.wordsTable);
     }
 }
