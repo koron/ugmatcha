@@ -165,6 +165,10 @@ public class Context {
     }
 
     public boolean scan(String text, Handler handler, int max) {
+        this.foundCount = 0;
+        this.terminated = false;
+        clear();
+
         boolean found = false;
         for (int i = 0, len = text.length(); i < len; ++i) {
             char ch = text.charAt(i);

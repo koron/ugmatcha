@@ -2,21 +2,4 @@
 
 **UG Matcha** matches against many words simultaneously.
 
-## Benchmark results.
-
-```
-$ gradle run
-:words_finder is getting tests from [task ':test']
-:compileJava UP-TO-DATE
-:processResources UP-TO-DATE
-:classes UP-TO-DATE
-:run
-Finder:    1072163.843 queries/sec (9000000 queries in  8.394 secs)
-Regexp:      17809.043 queries/sec (200000 queries in 11.230 secs)
-
-BUILD SUCCESSFUL
-
-Total time: 22.867 secs
-```
-
-試行回数が異なるのは、それぞれのテストが10秒程度で終わるように調整したため。
+See [ugmatcha-benchmark](https://github.com/koron/ugmatcha-benchmark) for benchmark result.

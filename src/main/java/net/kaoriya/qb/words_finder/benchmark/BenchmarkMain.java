@@ -9,8 +9,8 @@ public class BenchmarkMain {
 
     public static final String TARGETS_PATH = "data/targets2.txt";
 
-    public static final long FINDCOUNT_FINDER = 9000000;
-    public static final long FINDCOUNT_REGEXP = 200000;
+    public static final long FINDCOUNT_FINDER = 100000;
+    public static final long FINDCOUNT_REGEXP = 100000;
 
     public static void benchmark(
             Engine engine,
@@ -38,10 +38,13 @@ public class BenchmarkMain {
 
         boolean loop = true;
         long count = 0;
+        long found = 0;
         long start = System.nanoTime();
         while (loop) {
             for (String target : targets) {
-                engine.findOne(target);
+                if (engine.findOne(target) != null) {
+                    ++found;
+                }
                 ++count;
                 if (count >= findCount) {
                     loop = false;
@@ -53,8 +56,8 @@ public class BenchmarkMain {
 
         double seconds = elapsed / 1e9;
         System.out.format(
-                "%1$1s: %2$14.3f queries/sec (%3$d queries in %4$6.3f secs)",
-                engine.getName(), count / seconds, count, seconds);
+                "%1$1s: %2$14.3f queries/sec (%3$d queries in %4$6.3f secs) found %5$d",
+                engine.getName(), count / seconds, count, seconds, found);
         System.out.println("");
     }
 
