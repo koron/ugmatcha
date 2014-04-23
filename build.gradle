@@ -1,12 +1,8 @@
 // vim:set sts=4 sw=4 tw=0 et ft=groovy:
 
 apply plugin: 'java'
-//apply plugin: 'application'
 
 version = '0.1'
-//mainClassName = 'net.kaoriya.qb.words_finder.DebugMain'
-//mainClassName = 'net.kaoriya.qb.words_finder.benchmark.GenerateMain'
-mainClassName = 'net.kaoriya.qb.words_finder.benchmark.BenchmarkMain'
 
 repositories {
     mavenCentral()
