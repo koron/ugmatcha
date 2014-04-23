@@ -88,7 +88,6 @@ public class UGMatcher {
         this.stateMachine.verbose = this.verbose;
         this.stateMachine.fireHandler = this.work;
 
-        boolean found = false;
         while (this.work.hasNext()) {
             char ch = this.work.next();
             List<Event> events = this.wordsTable.getEvents(ch);
