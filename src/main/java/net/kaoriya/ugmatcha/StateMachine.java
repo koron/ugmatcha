@@ -25,117 +25,124 @@ class StateMachine {
 
     void put(List<Event> events) {
         if (DEBUG && this.verbose) {
-            System.out.format("StateMachine#put events=%s", events);
-            System.out.println("");
+            System.out.format("StateMachine#put2: %s\n", events);
         }
-        final int end = this.state.length;
-        int eventIter = 0;
-        int prevW = -1;
-        int prevEventIter = -1;
-        for (int w = 0; w < end;) {
+
+        int curr = -1;
+        int next = 0;
+        int ptr = 0;
+        boolean need_padding = false;
+
+        for (Event event : events) {
             if (DEBUG && this.verbose) {
-                System.out.format("  w=%d eventIter=%d\n", w, eventIter);
+                System.out.format("  event=%s\n", event);
             }
 
-            // Clear remained state when no more events.
-            if (eventIter >= events.size()) {
-                Arrays.fill(this.state, w, end, 0);
-                break;
-            }
-
-            // Guard from infinite loop.
-            if (w == prevW && eventIter == prevEventIter) {
-                if (DEBUG && this.verbose) {
-                    System.out.format("  terminated\n");
+            if (curr != event.id) {
+                if (need_padding) {
+                    padding(curr, next, "  PADDING1");
                 }
-                throw new RuntimeException("Terminated by possibility of infinite loop.  It maybe bug.  Please contact author");
-            }
-            prevW = w;
-            prevEventIter = eventIter;
-
-            // Clear state till next event.
-            int eventIterOrig = eventIter;
-            Event first = events.get(eventIter);
-            if (w < first.id) {
-                Arrays.fill(this.state, w, first.id, 0);
-                w = first.id;
-            }
-            int nextW = first.nextId;
-
-            // is first lead event?
-            if (first.index == 0) {
-                if (first.last) {
-                    if (this.fireHandler.fired(this, first)) {
-                        return;
-                    }
-                } else {
-                    ArrayUtils.shiftRight(this.state, w, nextW, 1);
-                    this.state[w] = 1;
+                if (next < event.id) {
+                    Arrays.fill(this.state, next, event.id, 0);
                 }
-                ++w;
-                ++eventIter;
+                curr = event.id;
+                next = event.nextId;
+                ptr = curr;
+                need_padding = false;
             }
 
-            // Apply events for the word.
-            boolean padding = false;
             if (DEBUG && this.verbose) {
-                System.out.format("    nextW=%d eventIter=%d\n", nextW, eventIter);
+                System.out.format(
+                        "  curr=%d next=%d ptr=%d need_padding=%s\n",
+                        curr, next, ptr, need_padding);
             }
-            for (int w2 = w; w2 < nextW;) {
+
+            while (ptr < next) {
+                int s = this.state[ptr];
                 if (DEBUG && this.verbose) {
-                    System.out.format("    w2=%d eventIter=%d\n",
-                            w2, eventIter);
+                    dumpState(curr, next, ptr, "    PRE :");
                 }
-                if (eventIter >= events.size()) {
-                    break;
-                }
-                Event ev = events.get(eventIter);
-                if (ev.id != first.id) {
-                    Arrays.fill(this.state, w2, nextW, 0);
-                    break;
-                }
-                // Update state
-                if (this.state[w2] < ev.index) {
-                    this.state[w2] = 0;
-                    padding = true;
-                    ++w2;
-                } else if (this.state[w2] == ev.index) {
-                    if (ev.last) {
-                        this.state[w2] = 0;
-                        padding = true;
-                        if (this.fireHandler.fired(this, ev)) {
+                if (s < event.index) {
+                    this.state[ptr] = 0;
+                    need_padding = true;
+                    ++ptr;
+                } else if (s == event.index) {
+                    if (event.last) {
+                        if (DEBUG && this.verbose) {
+                            System.out.format("    *fire: %s\n", event);
+                        }
+                        this.state[ptr] = 0;
+                        need_padding = true;
+                        if (this.fireHandler.fired(this, event)) {
                             return;
                         }
                     } else {
-                        this.state[w2] += 1;
+                        if (DEBUG && this.verbose) {
+                            System.out.format("    *add: %d\n",
+                                    ptr - curr);
+                        }
+                        this.state[ptr] += 1;
                     }
-                    ++w2;
-                    ++eventIter;
+                    ++ptr;
+                    break;
                 } else {
-                    ++eventIter;
-                }
-            }
-
-            if (eventIter == eventIterOrig) {
-                ++eventIter;
-            }
-
-            // Padding state.
-            if (padding) {
-                for (int r = w; r < nextW; ++r) {
-                    if (this.state[r] != 0) {
-                        this.state[w] = this.state[r];
-                        ++w;
+                    if (event.index == 0) {
+                        if (DEBUG && this.verbose) {
+                            System.out.format("    *new: %d\n", ptr - curr);
+                        }
+                        ArrayUtils.shiftRight(this.state, ptr, next, 1);
+                        this.state[ptr] = 1;
+                        ++ptr;
+                    } else {
+                        if (DEBUG && this.verbose) {
+                            System.out.format("    *skip\n");
+                        }
                     }
+                    break;
                 }
-                Arrays.fill(this.state, w, nextW, 0);
             }
-            w = nextW;
+            if (DEBUG && this.verbose) {
+                dumpState(curr, next, ptr, "    POST:");
+            }
+        }
+
+        if (need_padding) {
+            padding(curr, next, "  PADDING2");
         }
 
         if (DEBUG && this.verbose) {
-            System.out.format("  state=%s", ArrayUtils.toString(this.state));
             System.out.println("");
         }
+    }
+
+    void padding(int start, int end, String header) {
+        if (DEBUG && this.verbose) {
+            dumpState(start, end, -1, header + " PRE :");
+        }
+
+        int w = start;
+        for (int r = start; r < end; ++r) {
+            if (this.state[r] != 0) {
+                this.state[w] = this.state[r];
+                ++w;
+            }
+        }
+        Arrays.fill(this.state, w, end, 0);
+
+        if (DEBUG && this.verbose) {
+            dumpState(start, end, -1, header + " POST:");
+        }
+    }
+
+    void dumpState(int start, int end, int ptr, String header) {
+        StringBuilder s = new StringBuilder(header);
+        for (int i = start; i < end; ++i) {
+            if (i == ptr) {
+                s.append("[").append(this.state[i]).append("]");
+            } else {
+                s.append(" ").append(this.state[i]).append(" ");
+            }
+        }
+        System.out.println(s.toString());
     }
 }
