@@ -1,5 +1,7 @@
 package net.kaoriya.ugmatcha;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -27,11 +29,6 @@ public class UGMatcherTest {
     }
 
     @Test
-    public void findEmpty() {
-        findCheck(new String[] {}, "abc", new Match[]{});
-    }
-
-    @Test
     public void findSimple() {
         findCheck(
                 new String[] { "abc", },
@@ -46,6 +43,15 @@ public class UGMatcherTest {
                     new Match("abc", 0),
                     new Match("def", 3),
                     new Match("ghi", 6),
+                });
+    }
+
+    @Test
+    public void findUnmatch() {
+        findCheck(
+                new String[] { "abc", },
+                "def",
+                new Match[] {
                 });
     }
 
@@ -116,5 +122,40 @@ public class UGMatcherTest {
                 "d",
                 new Match[] {
                 });
+    }
+
+    @Test
+    public void getInvalidWord() {
+        UGMatcher m = UGMatcher.newMatcher("foo", "bar", "baz");
+
+        assertNull(m.getWord(-1));
+        assertEquals("foo", m.getWord(0));
+        assertEquals("foo", m.getWord(1));
+        assertEquals("bar", m.getWord(2));
+        assertEquals("baz", m.getWord(3));
+        assertNull(m.getWord(4));
+    }
+
+    @Test
+    public void interruptMatches() {
+        UGMatcher m = UGMatcher.newMatcher("foo", "bar", "baz");
+        final ArrayList<Match> found = new ArrayList<>();
+        m.match("foobarbaz", new MatchHandler() {
+            public boolean matched(UGMatcher matcher, int wordId, String text,
+                int index)
+            {
+                String w = matcher.getWord(wordId);
+                found.add(new Match(w, index - w.length() + 1));
+                return found.size() < 2 ? true : false;
+            }
+        });
+
+        Match[] result = found.toArray(new Match[0]);
+        assertArrayEquals("interruptMatches failed",
+                new Match[] {
+                    new Match("foo", 0),
+                    new Match("bar", 3),
+                },
+                result);
     }
 }

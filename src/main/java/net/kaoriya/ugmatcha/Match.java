@@ -23,8 +23,7 @@ public class Match {
         }
         // Check properties equality.
         Match p = (Match)o;
-        if (this.text == null ? p.text != null : !this.text.equals(p.text))
-        {
+        if (this.text == null ? p.text != null : !this.text.equals(p.text)) {
             return false;
         } else if (this.index != p.index) {
             return false;
