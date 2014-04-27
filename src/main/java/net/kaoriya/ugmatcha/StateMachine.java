@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 class StateMachine {
 
-    static final boolean DEBUG = true;
+    static final boolean DEBUG = false;
 
     final int[] state;
 
@@ -86,8 +86,17 @@ class StateMachine {
                     ++ptr;
                     break;
                 } else {
-                    if (DEBUG && this.verbose) {
-                        System.out.format("    *skip\n");
+                    if (event.index == 0) {
+                        if (DEBUG && this.verbose) {
+                            System.out.format("    *new: %d\n", ptr - curr);
+                        }
+                        ArrayUtils.shiftRight(this.state, ptr, next, 1);
+                        this.state[ptr] = 1;
+                        ++ptr;
+                    } else {
+                        if (DEBUG && this.verbose) {
+                            System.out.format("    *skip\n");
+                        }
                     }
                     break;
                 }

@@ -87,7 +87,7 @@ public class UGMatcherTest {
                 new Match[] {
                     new Match("aba", 0),
                     new Match("aba", 2),
-                }, true);
+                });
     }
 
     @Test
