@@ -33,7 +33,9 @@ class StateMachine {
         int ptr = 0;
         boolean need_padding = false;
 
-        for (Event event : events) {
+        for (int i = 0, N = events.size(); i < N; ++i) {
+            Event event = events.get(i);
+
             if (DEBUG && this.verbose) {
                 System.out.format("  event=%s\n", event);
             }
