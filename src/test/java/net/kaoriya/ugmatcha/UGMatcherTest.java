@@ -158,4 +158,13 @@ public class UGMatcherTest {
                 },
                 result);
     }
+
+    @Test
+    public void notFindSeparated() {
+        findCheck(
+                new String[] { "abc", "def" },
+                "deabf",
+                new Match[] {
+                });
+    }
 }

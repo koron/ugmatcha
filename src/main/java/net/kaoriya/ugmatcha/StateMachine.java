@@ -111,6 +111,7 @@ class StateMachine {
         if (need_padding) {
             padding(curr, next, "  PADDING2");
         }
+        Arrays.fill(this.state, next, this.state.length, 0);
 
         if (DEBUG && this.verbose) {
             System.out.println("");
