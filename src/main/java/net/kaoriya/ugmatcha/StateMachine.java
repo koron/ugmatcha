@@ -1,6 +1,5 @@
 package net.kaoriya.ugmatcha;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -23,7 +22,7 @@ class StateMachine {
     }
 
     void clear() {
-        Arrays.fill(this.state, 0);
+        ArrayUtils.fill(this.state, 0, this.state.length, 0);
         this.zeroBorder = 0;
     }
 
@@ -49,7 +48,7 @@ class StateMachine {
                     padding(curr, next, "  PADDING1");
                 }
                 if (next < event.id) {
-                    Arrays.fill(this.state, next, event.id, 0);
+                    ArrayUtils.fill(this.state, next, event.id, 0);
                 }
                 curr = event.id;
                 next = event.nextId;
@@ -117,7 +116,7 @@ class StateMachine {
         }
 
         if (next < this.zeroBorder) {
-            Arrays.fill(this.state, next, this.zeroBorder, 0);
+            ArrayUtils.fill(this.state, next, this.zeroBorder, 0);
         }
         this.zeroBorder = next;
 
@@ -138,7 +137,7 @@ class StateMachine {
                 ++w;
             }
         }
-        Arrays.fill(this.state, w, end, 0);
+        ArrayUtils.fill(this.state, w, end, 0);
 
         if (DEBUG && this.verbose) {
             dumpState(start, end, -1, header + " POST:");
