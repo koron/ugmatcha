@@ -132,12 +132,15 @@ class StateMachine {
 
         int w = start;
         for (int r = start; r < end; ++r) {
-            if (this.state[r] != 0) {
-                this.state[w] = this.state[r];
+            int v = this.state[r];
+            if (v != 0) {
+                if (w != r) {
+                    this.state[w] = v;
+                    this.state[r] = 0;
+                }
                 ++w;
             }
         }
-        ArrayUtils.fill(this.state, w, end, 0);
 
         if (DEBUG && this.verbose) {
             dumpState(start, end, -1, header + " POST:");
