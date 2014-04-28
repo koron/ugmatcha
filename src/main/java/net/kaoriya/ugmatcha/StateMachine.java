@@ -1,6 +1,5 @@
 package net.kaoriya.ugmatcha;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -11,16 +10,20 @@ class StateMachine {
 
     final int[] state;
 
+    int zeroBorder;
+
     FireHandler fireHandler;
 
     boolean verbose;
 
     StateMachine(int count) {
         this.state = new int[count];
+        this.zeroBorder = 0;
     }
 
     void clear() {
-        Arrays.fill(this.state, 0);
+        ArrayUtils.fill(this.state, 0, this.state.length, 0);
+        this.zeroBorder = 0;
     }
 
     void put(List<Event> events) {
@@ -45,7 +48,7 @@ class StateMachine {
                     padding(curr, next, "  PADDING1");
                 }
                 if (next < event.id) {
-                    Arrays.fill(this.state, next, event.id, 0);
+                    ArrayUtils.fill(this.state, next, event.id, 0);
                 }
                 curr = event.id;
                 next = event.nextId;
@@ -111,7 +114,11 @@ class StateMachine {
         if (need_padding) {
             padding(curr, next, "  PADDING2");
         }
-        Arrays.fill(this.state, next, this.state.length, 0);
+
+        if (next < this.zeroBorder) {
+            ArrayUtils.fill(this.state, next, this.zeroBorder, 0);
+        }
+        this.zeroBorder = next;
 
         if (DEBUG && this.verbose) {
             System.out.println("");
@@ -125,12 +132,15 @@ class StateMachine {
 
         int w = start;
         for (int r = start; r < end; ++r) {
-            if (this.state[r] != 0) {
-                this.state[w] = this.state[r];
+            int v = this.state[r];
+            if (v != 0) {
+                if (w != r) {
+                    this.state[w] = v;
+                    this.state[r] = 0;
+                }
                 ++w;
             }
         }
-        Arrays.fill(this.state, w, end, 0);
 
         if (DEBUG && this.verbose) {
             dumpState(start, end, -1, header + " POST:");
