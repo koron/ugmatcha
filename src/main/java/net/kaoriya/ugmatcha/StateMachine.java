@@ -11,16 +11,20 @@ class StateMachine {
 
     final int[] state;
 
+    int zeroBorder;
+
     FireHandler fireHandler;
 
     boolean verbose;
 
     StateMachine(int count) {
         this.state = new int[count];
+        this.zeroBorder = 0;
     }
 
     void clear() {
         Arrays.fill(this.state, 0);
+        this.zeroBorder = 0;
     }
 
     void put(List<Event> events) {
@@ -111,7 +115,11 @@ class StateMachine {
         if (need_padding) {
             padding(curr, next, "  PADDING2");
         }
-        Arrays.fill(this.state, next, this.state.length, 0);
+
+        if (next < this.zeroBorder) {
+            Arrays.fill(this.state, next, this.zeroBorder, 0);
+        }
+        this.zeroBorder = next;
 
         if (DEBUG && this.verbose) {
             System.out.println("");
