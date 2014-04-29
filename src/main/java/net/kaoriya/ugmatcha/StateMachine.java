@@ -149,7 +149,7 @@ class StateMachine {
         }
     }
 
-    private void clear(int start, int end) {
+    void clear(int start, int end) {
         for (int i = start; i < end; ++i) {
             this.state[i] = 0;
         }
