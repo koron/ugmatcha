@@ -2,9 +2,9 @@ package net.kaoriya.ugmatcha;
 
 class ArrayUtils {
 
-    static void fill(int[] array, int start, int end, int value) {
+    static void reset(int[] array, int start, int end) {
         for (int i = start; i < end; ++i) {
-            array[i] = value;
+            array[i] = 0;
         }
     }
 

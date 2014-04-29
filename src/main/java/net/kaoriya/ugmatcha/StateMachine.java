@@ -22,8 +22,10 @@ class StateMachine {
     }
 
     void clear() {
-        ArrayUtils.fill(this.state, 0, this.state.length, 0);
-        this.zeroBorder = 0;
+        if (this.zeroBorder > 0) {
+            ArrayUtils.reset(this.state, 0, this.state.length);
+            this.zeroBorder = 0;
+        }
     }
 
     void put(List<Event> events) {
@@ -48,7 +50,7 @@ class StateMachine {
                     padding(curr, next, "  PADDING1");
                 }
                 if (next < event.id) {
-                    ArrayUtils.fill(this.state, next, event.id, 0);
+                    ArrayUtils.reset(this.state, next, event.id);
                 }
                 curr = event.id;
                 next = event.nextId;
@@ -116,7 +118,7 @@ class StateMachine {
         }
 
         if (next < this.zeroBorder) {
-            ArrayUtils.fill(this.state, next, this.zeroBorder, 0);
+            ArrayUtils.reset(this.state, next, this.zeroBorder);
         }
         this.zeroBorder = next;
 
