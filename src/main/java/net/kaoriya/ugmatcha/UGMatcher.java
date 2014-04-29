@@ -84,7 +84,7 @@ public class UGMatcher {
     public boolean match(String text, MatchHandler handler, int max) {
         // Set up a match.
         this.work.setup(text, handler, max);
-        this.stateMachine.clear();
+        this.stateMachine.reset();
         this.stateMachine.verbose = this.verbose;
         this.stateMachine.fireHandler = this.work;
 
@@ -92,7 +92,7 @@ public class UGMatcher {
             char ch = this.work.next();
             List<Event> events = this.wordsTable.getEvents(ch);
             if (events == null) {
-                this.stateMachine.clear();
+                this.stateMachine.reset();
                 continue;
             }
             this.stateMachine.put(events);

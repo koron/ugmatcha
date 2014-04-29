@@ -7,7 +7,7 @@ public class StateMachineTest {
     @Test
     public void dumpState() {
         StateMachine m = new StateMachine(10);
-        m.clear();
+        m.reset();
         m.dumpState(0, 10, 5, "dumpState:");
     }
 }

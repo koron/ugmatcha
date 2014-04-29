@@ -2,12 +2,6 @@ package net.kaoriya.ugmatcha;
 
 class ArrayUtils {
 
-    static void reset(int[] array, int start, int end) {
-        for (int i = start; i < end; ++i) {
-            array[i] = 0;
-        }
-    }
-
     static void shiftRight(int[] array, int start, int end, int shift) {
         for (int r = end - 1 - shift, w = end - 1; r >= start; --r, --w) {
             array[w] = array[r];

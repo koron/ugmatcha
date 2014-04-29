@@ -21,9 +21,9 @@ class StateMachine {
         this.zeroBorder = 0;
     }
 
-    void clear() {
+    void reset() {
         if (this.zeroBorder > 0) {
-            ArrayUtils.reset(this.state, 0, this.state.length);
+            clear(0, this.state.length);
             this.zeroBorder = 0;
         }
     }
@@ -50,7 +50,7 @@ class StateMachine {
                     padding(curr, next, "  PADDING1");
                 }
                 if (next < event.id) {
-                    ArrayUtils.reset(this.state, next, event.id);
+                    clear(next, event.id);
                 }
                 curr = event.id;
                 next = event.nextId;
@@ -118,7 +118,7 @@ class StateMachine {
         }
 
         if (next < this.zeroBorder) {
-            ArrayUtils.reset(this.state, next, this.zeroBorder);
+            clear(next, this.zeroBorder);
         }
         this.zeroBorder = next;
 
@@ -146,6 +146,12 @@ class StateMachine {
 
         if (DEBUG && this.verbose) {
             dumpState(start, end, -1, header + " POST:");
+        }
+    }
+
+    private void clear(int start, int end) {
+        for (int i = start; i < end; ++i) {
+            this.state[i] = 0;
         }
     }
 
