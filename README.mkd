@@ -1,5 +1,70 @@
 # UG Matcha
 
-**UG Matcha** matches against many words simultaneously.
+**UG Matcha** matches against many words simultaneously, with less memory at
+runtime.
 
-See [ugmatcha-benchmark](https://github.com/koron/ugmatcha-benchmark) for benchmark result.
+See [ugmatcha-benchmark](https://github.com/koron/ugmatcha-benchmark) for
+benchmark result.
+
+## Usage
+
+Please use `UGMatcher#newMatcher()` and `UGMatcher#match()` for maximum
+performance.
+
+```java
+import net.kaoriya.ugmatcha.UGMatcher;
+import net.kaoriya.ugmatcha.MatchHandler;
+
+// Prepare a matcher.
+UGMatcher m = UGMatcher.newMatcher("foo", "bar", "baz");
+
+m.match("foobarbazqux", new MatchHandler() {
+  // This method is called when found each words.
+  public boolean matched(UGMatcher u, int wordId, String text, int index) {
+    // You can retrieve matched word by UGMatcher#getWord()
+    String word = u.getWord(wordId);
+    // Do something with matched "word".
+
+    // Return true to continue matching, otherwise false to terminate.
+    return true;
+  }
+});
+```
+
+For convenient usecase, you can use `UGMatcher#find()`.  But this method
+expends more memory than `UGMatcher#match()` at runtime.
+
+```java
+import net.kaoriya.ugmatcha.UGMatcher;
+import net.kaoriya.ugmatcha.Match;
+
+import java.util.List;
+
+// Prepare a matcher.
+UGMatcher m = UGMatcher.newMatcher("foo", "bar", "baz");
+
+List<Match> list = m.find("foobarbazqux");
+for (Match m : list) {
+  // Access matched "word" by Match#text.
+  String word = m.text;
+  // Access poistion of matched "word" by Match.index.
+  int index = m.index;
+}
+```
+
+`UGMatcher#newMatcher()` accepts `List<String>` too.  And it accepts another
+`UGMatcher` to duplicate it.  A UGMatcher instance is not support multi-threads
+use/access.  So making duplication is used for multi-threads.
+
+```
+import net.kaoriya.ugmatcha.UGMatcher;
+import java.util.ArrayList;
+
+ArrayList<String> list = new ArrayList<>();
+list.add("foo");
+list.add("bar");
+list.add("baz");
+
+UGMatcher original = UGMatcher.newMatcher(list);
+UGMatcher copied = UGMatcher.newMatcher(original);
+```
