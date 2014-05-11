@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Many words Matcher.
+ */
 public class UGMatcher {
 
     class WorkingArea implements FireHandler {
@@ -66,7 +69,9 @@ public class UGMatcher {
     }
 
     /**
-     * Get word text for wordId.
+     * Get text of a matched word.
+     *
+     * @param wordId Word ID.
      */
     public String getWord(int wordId) {
         Word w = this.wordsTable.getWord(wordId);
@@ -78,8 +83,11 @@ public class UGMatcher {
      *
      * When matched callback with handler.
      *
+     * @param text Target text to match.
      * @param handler Callback interface when found match.
      * @param max Max count of match, 0 for ALL.
+     *
+     * @return True when found one or more, otherwise false.
      */
     public boolean match(String text, MatchHandler handler, int max) {
         // Set up a match.
@@ -110,6 +118,11 @@ public class UGMatcher {
 
     /**
      * Match with text, for all matches.
+     *
+     * @param text Target text to match.
+     * @param handler Callback interface when found match.
+     *
+     * @return True when found one or more, otherwise false.
      */
     public boolean match(String text, MatchHandler handler) {
         return match(text, handler, 0);
@@ -117,6 +130,11 @@ public class UGMatcher {
 
     /**
      * Find matches as list of Match.
+     *
+     * @param text Target text to match.
+     * @param max Max count of match, 0 for ALL.
+     *
+     * @return List of matched words.
      */
     public List<Match> find(String text, int max) {
         final ArrayList<Match> found = new ArrayList<>();
@@ -134,6 +152,10 @@ public class UGMatcher {
 
     /**
      * Find matches as list of Match.
+     *
+     * @param text Target text to match.
+     *
+     * @return List of matched words.
      */
     public List<Match> find(String text) {
         return find(text, 0);
@@ -144,6 +166,10 @@ public class UGMatcher {
 
     /**
      * Create a new UGMatcher.
+     *
+     * @param words List of words to match.
+     *
+     * @return A new matcher.
      */
     public static UGMatcher newMatcher(List<String> words) {
         WordsTable wordsTable = new WordsTable();
@@ -154,6 +180,10 @@ public class UGMatcher {
 
     /**
      * Create a new UGMatcher.
+     *
+     * @param words Array of words to match.
+     *
+     * @return A new matcher.
      */
     public static UGMatcher newMatcher(String ...words) {
         return newMatcher(Arrays.asList(words));
@@ -161,6 +191,10 @@ public class UGMatcher {
 
     /**
      * Create a new clone UGMatcher.
+     *
+     * @param matcher Original matcher to be cloned.
+     *
+     * @return A new matcher.
      */
     public static UGMatcher newMatcher(UGMatcher matcher) {
         return new UGMatcher(matcher.wordsTable);

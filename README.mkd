@@ -56,7 +56,7 @@ for (Match m : list) {
 `UGMatcher` to duplicate it.  A UGMatcher instance is not support multi-threads
 use/access.  So making duplication is used for multi-threads.
 
-```
+```java
 import net.kaoriya.ugmatcha.UGMatcher;
 import java.util.ArrayList;
 

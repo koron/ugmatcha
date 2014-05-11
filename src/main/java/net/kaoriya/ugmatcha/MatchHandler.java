@@ -1,5 +1,8 @@
 package net.kaoriya.ugmatcha;
 
+/**
+ * Handler of matches.
+ */
 public interface MatchHandler {
 
     /**

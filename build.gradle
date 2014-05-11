@@ -12,6 +12,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
+javadoc {
+    options.locale = 'en_US'
+}
+
 ////////////////////////////////////////////////////////////////////////////
 // for https://coveralls.io/
 

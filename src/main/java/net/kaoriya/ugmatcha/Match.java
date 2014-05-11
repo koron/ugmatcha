@@ -1,11 +1,22 @@
 package net.kaoriya.ugmatcha;
 
+/**
+ * Matched word information.
+ */
 public class Match {
 
+    /** "text" of matched word. */
     public final String text;
 
+    /** Position of matched word. */
     public final int index;
 
+    /**
+     * Create a Match.
+     *
+     * @param text Text of matched word.
+     * @param index Position of matched word.
+     */
     public Match(String text, int index) {
         this.text = text;
         this.index = index;
