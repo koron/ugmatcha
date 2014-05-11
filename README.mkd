@@ -3,8 +3,10 @@
 **UG Matcha** matches against many words simultaneously, with less memory at
 runtime.
 
-See [ugmatcha-benchmark](https://github.com/koron/ugmatcha-benchmark) for
-benchmark result.
+## Links
+
+*   [API Reference (javadoc)](http://koron.github.io/ugmatcha/javadoc/)
+*   [Benchmark and result](https://github.com/koron/ugmatcha-benchmark)
 
 ## Usage
 
