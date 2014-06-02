@@ -14,6 +14,14 @@ public class TernaryNode<T> {
         boolean process(TernaryNode<S> node);
     }
 
+    public static class Counter<S> implements Processor<S> {
+        public int count = 0;
+        public boolean process(TernaryNode<S> node) {
+            ++this.count;
+            return true;
+        }
+    }
+
     public TernaryNode(char label) {
         this.label = label;
     }
@@ -70,14 +78,9 @@ public class TernaryNode<T> {
         if (this.firstChild == null) {
             return 0;
         }
-        final int[] count = new int[]{ 0 };
-        each(new Processor<T>() {
-            public boolean process(TernaryNode<T> node) {
-                ++count[0];
-                return true;
-            }
-        });
-        return count[0];
+        Counter<T> counter = new Counter<T>();
+        each(counter);
+        return counter.count;
     }
 
     public void removeAll() {
