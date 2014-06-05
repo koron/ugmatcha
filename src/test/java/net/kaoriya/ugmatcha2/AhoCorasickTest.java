@@ -53,4 +53,18 @@ public class AhoCorasickTest {
         TernaryNode<AhoCorasick.Data<Integer>> n10 = n9.get('e');
         checkNode(n10, 0, new AhoCorasick.Data<Integer>("abcde", 10, r));
     }
+
+    @Test
+    public void matchResults() {
+        AhoCorasick<Integer> m = newInst();
+
+        AhoCorasick.Match<Integer>[] results = m.matchAll("abcde").toArray(
+                new AhoCorasick.Match[0]);
+        assertArrayEquals(new AhoCorasick.Match[] {
+            new AhoCorasick.Match<Integer>(0, "ab", 2),
+            new AhoCorasick.Match<Integer>(1, "bc", 4),
+            new AhoCorasick.Match<Integer>(3, "d", 7),
+            new AhoCorasick.Match<Integer>(0, "abcde", 10),
+        }, results);
+    }
 }

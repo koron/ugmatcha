@@ -15,6 +15,41 @@ public class AhoCorasick<T> {
             this.pattern = pattern;
             this.value = value;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null) {
+                return false;
+            }
+            Match<S> t = (Match<S>)o;
+            if (t == null) {
+                return false;
+            }
+            // compare member fields.
+            if (this.index != t.index) {
+                return false;
+            }
+            if (this.pattern != t.pattern && this.pattern != null &&
+                    this.pattern.equals(t.pattern)) {
+                return false;
+            }
+            if (this.value != t.value && this.value != null &&
+                    !this.value.equals(t.value)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder();
+            s.append("Match<>{")
+                .append("index=").append(this.index)
+                .append(" pattern=").append(this.pattern)
+                .append(" value=").append(this.value)
+                .append("}");
+            return s.toString();
+        }
     }
 
     static class Data<S> {
@@ -149,18 +184,19 @@ public class AhoCorasick<T> {
         ArrayList<Match<T>> list = new ArrayList<>();
         TernaryNode<Data<T>> root = this.trie.root();
         TernaryNode<Data<T>> curr = root;
+        TernaryNode<Data<T>> target = null;
         for (int i = 0, L = text.length(); i < L; ++i) {
             char ch = text.charAt(i);
             curr = getNextNode(curr, root, ch);
-            while (curr != root) {
-                Data<T> data = curr.getValue();
+            for (target = curr; target != root; ) {
+                Data<T> data = target.getValue();
                 if (data.pattern != null) {
                     list.add(new Match<T>(
                                 i - data.pattern.length() + 1,
                                 data.pattern,
                                 data.value));
                 }
-                curr = data.failure;
+                target = data.failure;
             }
         }
         return list;
