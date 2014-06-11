@@ -17,54 +17,53 @@ public class AhoCorasickTest {
     }
 
     private void checkNode(
-            TernaryNode<AhoCorasick.Data<Integer>> node,
+            TernaryNode<Data<Integer>> node,
             int size,
-            AhoCorasick.Data<Integer> expected)
+            Data<Integer> expected)
     {
         assertEquals(size, node.size());
-        AhoCorasick.Data<Integer> actually = node.getValue();
+        Data<Integer> actually = node.getValue();
         assertEquals(expected, actually);
     }
 
     @Test
     public void treeStructure() {
         AhoCorasick<Integer> m = newInst();
-        TernaryNode<AhoCorasick.Data<Integer>> r = m.trie.root();
-        AhoCorasick.Data<Integer> invalid = new AhoCorasick.Data<Integer>(r);
+        TernaryNode<Data<Integer>> r = m.trie.root();
+        Data<Integer> invalid = new Data<Integer>(r);
         checkNode(r, 3, invalid);
-        TernaryNode<AhoCorasick.Data<Integer>> n1 = r.get('a');
+        TernaryNode<Data<Integer>> n1 = r.get('a');
         checkNode(n1, 1, invalid);
-        TernaryNode<AhoCorasick.Data<Integer>> n3 = r.get('b');
+        TernaryNode<Data<Integer>> n3 = r.get('b');
         checkNode(n3, 2, invalid);
-        TernaryNode<AhoCorasick.Data<Integer>> n7 = r.get('d');
+        TernaryNode<Data<Integer>> n7 = r.get('d');
         checkNode(n7, 0, invalid);
-        TernaryNode<AhoCorasick.Data<Integer>> n2 = n1.get('b');
-        checkNode(n2, 1, new AhoCorasick.Data<Integer>("ab", 2, n3));
-        TernaryNode<AhoCorasick.Data<Integer>> n4 = n3.get('c');
-        checkNode(n4, 0, new AhoCorasick.Data<Integer>("bc", 4, r));
-        TernaryNode<AhoCorasick.Data<Integer>> n5 = n3.get('a');
-        checkNode(n5, 1, new AhoCorasick.Data<Integer>(n1));
-        TernaryNode<AhoCorasick.Data<Integer>> n8 = n2.get('c');
-        checkNode(n8, 1, new AhoCorasick.Data<Integer>(n4));
-        TernaryNode<AhoCorasick.Data<Integer>> n6 = n5.get('b');
-        checkNode(n6, 0, new AhoCorasick.Data<Integer>("bab", 6, n2));
-        TernaryNode<AhoCorasick.Data<Integer>> n9 = n8.get('d');
-        checkNode(n9, 1, new AhoCorasick.Data<Integer>(n7));
-        TernaryNode<AhoCorasick.Data<Integer>> n10 = n9.get('e');
-        checkNode(n10, 0, new AhoCorasick.Data<Integer>("abcde", 10, r));
+        TernaryNode<Data<Integer>> n2 = n1.get('b');
+        checkNode(n2, 1, new Data<Integer>("ab", 2, n3));
+        TernaryNode<Data<Integer>> n4 = n3.get('c');
+        checkNode(n4, 0, new Data<Integer>("bc", 4, r));
+        TernaryNode<Data<Integer>> n5 = n3.get('a');
+        checkNode(n5, 1, new Data<Integer>(n1));
+        TernaryNode<Data<Integer>> n8 = n2.get('c');
+        checkNode(n8, 1, new Data<Integer>(n4));
+        TernaryNode<Data<Integer>> n6 = n5.get('b');
+        checkNode(n6, 0, new Data<Integer>("bab", 6, n2));
+        TernaryNode<Data<Integer>> n9 = n8.get('d');
+        checkNode(n9, 1, new Data<Integer>(n7));
+        TernaryNode<Data<Integer>> n10 = n9.get('e');
+        checkNode(n10, 0, new Data<Integer>("abcde", 10, r));
     }
 
     @Test
     public void matchResults() {
         AhoCorasick<Integer> m = newInst();
 
-        AhoCorasick.Match<Integer>[] results = m.matchAll("abcde").toArray(
-                new AhoCorasick.Match[0]);
-        assertArrayEquals(new AhoCorasick.Match[] {
-            new AhoCorasick.Match<Integer>(0, "ab", 2),
-            new AhoCorasick.Match<Integer>(1, "bc", 4),
-            new AhoCorasick.Match<Integer>(3, "d", 7),
-            new AhoCorasick.Match<Integer>(0, "abcde", 10),
+        Match<Integer>[] results = m.matchAll("abcde").toArray(new Match[0]);
+        assertArrayEquals(new Match[] {
+            new Match<Integer>(0, "ab", 2),
+            new Match<Integer>(1, "bc", 4),
+            new Match<Integer>(3, "d", 7),
+            new Match<Integer>(0, "abcde", 10),
         }, results);
     }
 }
