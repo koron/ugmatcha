@@ -181,7 +181,21 @@ public class AhoCorasick<T> {
     }
 
     public List<Match<T>> matchAll(String text) {
-        ArrayList<Match<T>> list = new ArrayList<>();
+        final ArrayList<Match<T>> list = new ArrayList<>();
+        match(text, new MatchHandler<T>() {
+            public boolean matched(int index, String pattern, T value) {
+                list.add(new Match<T>(index, pattern, value));
+                return true;
+            }
+        }, 0);
+        return list;
+    }
+
+    public boolean match(String text, MatchHandler<T> handler, int max) {
+        if (max <= 0) {
+            max = Integer.MAX_VALUE;
+        }
+        int count = 0;
         TernaryNode<Data<T>> root = this.trie.root();
         TernaryNode<Data<T>> curr = root;
         TernaryNode<Data<T>> target = null;
@@ -191,14 +205,18 @@ public class AhoCorasick<T> {
             for (target = curr; target != root; ) {
                 Data<T> data = target.getValue();
                 if (data.pattern != null) {
-                    list.add(new Match<T>(
+                    ++count;
+                    if (handler.matched(
                                 i - data.pattern.length() + 1,
                                 data.pattern,
-                                data.value));
+                                data.value) == false
+                            || count >= max) {
+                        break;
+                    }
                 }
                 target = data.failure;
             }
         }
-        return list;
+        return count > 0;
     }
 }

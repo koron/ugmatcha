@@ -16,6 +16,10 @@ javadoc {
     options.locale = 'en_US'
 }
 
+compileJava {
+    options.compilerArgs << "-Xlint:unchecked"
+}
+
 ////////////////////////////////////////////////////////////////////////////
 // for https://coveralls.io/
 
