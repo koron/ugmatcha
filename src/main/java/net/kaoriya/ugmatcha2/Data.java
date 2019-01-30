@@ -24,12 +24,18 @@ class Data<T> {
         this(null, null, null);
     }
 
+    // to comparison in equals method.
+    @SuppressWarnings("unchecked")
+    private Data<T> toData(Object o) {
+        return (Data<T>)o;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;
         }
-        Data<T> t = (Data<T>)o;
+        Data<T> t = toData(o);
         if (t == null) {
             return false;
         }

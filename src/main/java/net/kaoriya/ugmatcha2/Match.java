@@ -12,12 +12,18 @@ public class Match<T> {
         this.value = value;
     }
 
+    // to comparison in equals method.
+    @SuppressWarnings("unchecked")
+    private Match<T> toMatch(Object o) {
+        return (Match<T>)o;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;
         }
-        Match<T> t = (Match<T>)o;
+        Match<T> t = toMatch(o);
         if (t == null) {
             return false;
         }
