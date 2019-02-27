@@ -18,10 +18,12 @@ javadoc {
 
 compileJava {
     //options.compilerArgs << "-Xlint:unchecked"
+    options.encoding = 'UTF-8';
 }
 
 compileTestJava {
     //options.compilerArgs << "-Xlint:unchecked"
+    options.encoding = 'UTF-8';
 }
 
 ////////////////////////////////////////////////////////////////////////////

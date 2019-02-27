@@ -66,4 +66,29 @@ public class AhoCorasickTest {
             new Match<Integer>(0, "abcde", 10),
         }, results);
     }
+
+    private AhoCorasick<Integer> newInst2() {
+        AhoCorasick<Integer> m = new AhoCorasick<>();
+        m.add("あい", 2);
+        m.add("いう", 4);
+        m.add("いあい", 6);
+        m.add("え", 7);
+        m.add("あいうえお", 10);
+        m.compile();
+        return m;
+    }
+
+    @Test
+    public void matchResults2() {
+        AhoCorasick<Integer> m = newInst2();
+
+        Match<Integer>[] results = m.matchAll("あいうえお").toArray(new Match[0]);
+        assertArrayEquals(new Match[] {
+            new Match<Integer>(0, "あい", 2),
+            new Match<Integer>(1, "いう", 4),
+            new Match<Integer>(3, "え", 7),
+            new Match<Integer>(0, "あいうえお", 10),
+        }, results);
+    }
+
 }
